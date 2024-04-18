@@ -50,6 +50,7 @@ h1 {
     background-color: #FAFAF5;
     border-radius: 8px;
     border: 1px solid #E6E6E6;
+    
 }
 
 .orderSummaryTitle {
@@ -60,6 +61,13 @@ h1 {
 .orderSummaryBody {
     padding: 1rem;
 
+}
+.titleCart{
+    justify-content: right;
+    display: flex;
+    font-size: larger;
+    font-weight: 300;
+    padding: 1rem 2.5rem 0 0;
 }
 
 .list {
