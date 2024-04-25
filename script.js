@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function (event) {
+document.addEventListener("DOMContentLoaded", function(event) {
   LoadList();
 });
 
@@ -11,38 +11,39 @@ function LoadList() {
 function GenerateListHtml(list) {
   let text = "";
   if (list)
-    list.forEach(function (element, index) {
+    list.forEach(function(element, index) {
       text += `       
       <div class="item">
       <div class="contentItem">
         <div class="nameItem">${element.Name}</div>
         <div class="valueItem">Price:$${parseFloat(element.Value).toFixed(
-          2
-        )}/Kg</div>
+        2
+      )}/Kg</div>
         <div class="quantityItem">Quantity:${parseFloat(
-          element.Quantity
-        ).toFixed(2)}Kg</div>
+        element.Quantity
+      ).toFixed(2)}Kg</div>
         <div>
-          <button class="editButton" title="Edit  item from list"> <i class="fa fa-pencil"></i></button>
           <button value="${index}" onclick="RemoveItem(this)" class="removeButton" title="Remove item from list"> <i
               class="fa fa-trash"></i></button>
         </div>
       </div>
     </div>`;
     });
-  text += ` <button onclick="switchModal()" title="add item from list" class="btnAction buttonAddItem">Add Item <i class="fa fa-plus"></i></button>`;
+  text += ` <button onclick="SwitchModal()" title="add item from list" class="btnAction buttonAddItem">Add Item <i class="fa fa-plus"></i></button>`;
   return text;
 }
 
 function AddItem() {
   let list = GetStorageList();
-  list.push({
-    Quantity: document.getElementById("InputQuantity").value,
-    Value: document.getElementById("InputValue").value,
-    Name: document.getElementById("InputName").value,
-  });
-  SaveChange(list);
-  switchModal();
+  if (Validate()) {
+    list.push({
+      Quantity: document.getElementById("InputQuantity").value,
+      Value: document.getElementById("InputValue").value,
+      Name: document.getElementById("InputName").value,
+    });
+    SaveChange(list);
+    SwitchModal();
+  }
 }
 
 function RemoveItem(element) {
@@ -61,21 +62,20 @@ function SaveChange(list) {
   LoadList();
 }
 
-const switchModal = () => {
+function SwitchModal() {
   const modal = document.querySelector(".modal");
   const actualStyle = modal.style.display;
   CleanInput();
-  if (actualStyle == "block") {
+  if (actualStyle == "block")
     modal.style.display = "none";
-  } else {
+  else
     modal.style.display = "block";
-  }
 };
 
-window.onclick = function (event) {
+window.onclick = function(event) {
   const modal = document.querySelector(".modal");
   if (event.target == modal) {
-    switchModal();
+    SwitchModal();
   }
 };
 
@@ -94,4 +94,26 @@ function SwitchAction(action) {
       AddItem();
       break;
   }
+}
+
+function Validate() {
+  let accept = true;
+
+  let name = document.getElementById("InputName");
+  let value = document.getElementById("InputValue");
+  let quantity = document.getElementById("InputQuantity");
+
+  if (name.value == "") {
+
+    accept = false;
+  }
+
+  if (value.value == "") {
+    accept = false;
+  }
+
+  if (quantity.value == "") {
+    accept = false;
+  }
+  return accept;
 }

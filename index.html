@@ -13,12 +13,21 @@
 
 <body>
   <div class="modal">
-    <div class="content">
-      <input type="text" id="InputName" placeholder="Product's name"/>
-      <input type="number" id="InputValue" step='0.01' min="0" placeholder="Product's value"/>
-      <input type="number"min="0" id="InputQuantity" placeholder="Quantity"/>
-      <button value="Add" onclick="SwitchAction(this)" class="btnAction buttonAddItem">Save</button>
-    </div>
+    <form>
+      <div class="content">
+
+        <label for="InputName">Name</label>
+        <input required type="text" id="InputName" placeholder="Product's name" />
+        <br>
+        <label for="InputValue">Price</label>
+        <input required type="number" id="InputValue" step='0.01' min="0" placeholder="Product's value" />
+        <br>
+        <label for="InputQuantity">Quantity/Kg</label>
+        <input required type="number" min="0" id="InputQuantity" placeholder="Quantity" />
+        <button type="submit" value="Add" onclick="SwitchAction(this)" class="btnAction buttonAddItem">Save</button>
+        <br>
+      </div>
+    </form>
   </div>
 
   <div class="container">
@@ -27,7 +36,7 @@
       <img class="imageTitle" src="./images/titleimage.png" />
     </div>
     <div class="titleCart">
-      Products 
+      Products
     </div>
     <div class="functions">
       <div class="list">
