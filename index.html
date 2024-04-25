@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en-US">
 
 <head>
   <meta charset="UTF-8">
@@ -15,7 +15,6 @@
   <div class="modal">
     <form>
       <div class="content">
-
         <label for="InputName">Name</label>
         <input required type="text" id="InputName" placeholder="Product's name" />
         <br>
@@ -24,12 +23,12 @@
         <br>
         <label for="InputQuantity">Quantity/Kg</label>
         <input required type="number" min="0" id="InputQuantity" placeholder="Quantity" />
-        <button type="submit" value="Add" onclick="SwitchAction(this)" class="btnAction buttonAddItem">Save</button>
+        <button type="submit" value="Add" onclick="AddItem()" class="btnAction buttonAddItem">Save</button>
         <br>
       </div>
     </form>
   </div>
-
+  <div class="editmodal"></div>
   <div class="container">
     <div class="title">
       <h1>Hortifrúti</h1>
@@ -39,6 +38,7 @@
       Products
     </div>
     <div class="functions">
+
       <div class="list">
       </div>
     </div>

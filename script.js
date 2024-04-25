@@ -23,7 +23,8 @@ function GenerateListHtml(list) {
         element.Quantity
       ).toFixed(2)}Kg</div>
         <div>
-          <button value="${index}" onclick="RemoveItem(this)" class="removeButton" title="Remove item from list"> <i
+          <button value="${index}" class="editButton" onclick="OpenModal(this.value)" title="Edit item from list"> <i class="fa fa-pencil"></i></button>
+          <button value="${index}" onclick="RemoveItem(this.value)" class="removeButton" title="Remove item from list"> <i
               class="fa fa-trash"></i></button>
         </div>
       </div>
@@ -46,9 +47,22 @@ function AddItem() {
   }
 }
 
-function RemoveItem(element) {
+function EditItem(itemId) {
   let list = GetStorageList();
-  list.splice(element.value, 1);
+
+  list[itemId].Quantity = document.getElementById("input-quantity-edit").value;
+  list[itemId].Value = document.getElementById("input-value-edit").value;
+  list[itemId].Name = document.getElementById("input-name-edit").value;
+
+  SaveChange(list);
+  let modal = document.querySelector(".editmodal");
+  modal.innerHTML = '';
+  SwitchModal(modal);
+}
+
+function RemoveItem(itemId) {
+  let list = GetStorageList();
+  list.splice(itemId, 1);
   SaveChange(list);
 }
 
@@ -62,20 +76,35 @@ function SaveChange(list) {
   LoadList();
 }
 
-function SwitchModal() {
-  const modal = document.querySelector(".modal");
-  const actualStyle = modal.style.display;
-  CleanInput();
-  if (actualStyle == "block")
-    modal.style.display = "none";
-  else
-    modal.style.display = "block";
+function SwitchModal(modal) {
+  if (modal) {
+    const actualStyle = modal.style.display;
+    CleanInput();
+    if (actualStyle == "block")
+      modal.style.display = "none";
+    else
+      modal.style.display = "block";
+  }
+  else {
+    modal = document.querySelector(".modal");
+    const actualStyle = modal.style.display;
+    CleanInput();
+    if (actualStyle == "block")
+      modal.style.display = "none";
+    else
+      modal.style.display = "block";
+  }
+
 };
 
 window.onclick = function(event) {
   const modal = document.querySelector(".modal");
+  const modal2 = document.querySelector(".editmodal");
   if (event.target == modal) {
-    SwitchModal();
+    SwitchModal(modal);
+  }
+  if (event.target == modal2) {
+    SwitchModal(modal2);
   }
 };
 
@@ -83,17 +112,6 @@ function CleanInput() {
   document.getElementById("InputQuantity").value = "";
   document.getElementById("InputValue").value = "";
   document.getElementById("InputName").value = "";
-}
-
-function SwitchAction(action) {
-  switch (action.value) {
-    case "Edit":
-      EditProduct();
-      break;
-    case "Add":
-      AddItem();
-      break;
-  }
 }
 
 function Validate() {
@@ -116,4 +134,29 @@ function Validate() {
     accept = false;
   }
   return accept;
+}
+
+function OpenModal(itemId) {
+
+  let list = GetStorageList();
+  let item = list[itemId];
+
+  let modal = document.querySelector(".editmodal");
+  modal.innerHTML = `  
+    <form>
+      <div class="content">
+
+        <label for="input-name-edit">Name</label>
+        <input required type="text" id="input-name-edit" value="${item.Name}" placeholder="Product's name" />
+        <br>
+        <label for="input-value-edit">Price</label>
+        <input required type="number" id="input-value-edit" value="${item.Value}" step='0.01' min="0" placeholder="Product's value" />
+        <br>
+        <label for="input-quantity-edit">Quantity/Kg</label>
+        <input required type="number" min="0" value="${item.Quantity}" id="input-quantity-edit" placeholder="Quantity" />
+        <button type="submit" value="${itemId}" onclick="EditItem(this.value)" class="btnAction buttonAddItem">Edit</button>
+        <br>
+      </div>
+    </form>`;
+  modal.style.display = "block";
 }
