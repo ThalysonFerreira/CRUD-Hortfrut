@@ -18,8 +18,10 @@ function GenerateListHtml(list) {
         <div class="nameItem">${element.Name}</div>
         <div class="valueItem">Price:$${parseFloat(element.Value).toFixed(
           2
-        )}</div>
-        <div class="quantityItem">Quantity:${element.Quantity}</div>
+        )}/Kg</div>
+        <div class="quantityItem">Quantity:${parseFloat(
+          element.Quantity
+        ).toFixed(2)}Kg</div>
         <div>
           <button class="editButton" title="Edit  item from list"> <i class="fa fa-pencil"></i></button>
           <button value="${index}" onclick="RemoveItem(this)" class="removeButton" title="Remove item from list"> <i
